@@ -7,25 +7,27 @@ Created on 2016年1月18日
 '''
 from random_list import RandomList
 R = RandomList(5, 10)
-#lst = R.gen()
-lst = [5,7,1,3,9]
+lst = R.gen()
+def sub_sort(array,low,high):
+    key = array[low]
+    while low < high:
+        while low < high and array[high] >= key:
+            high -= 1
+        while low < high and array[high] < key:
+            array[low] = array[high]
+            low += 1
+            array[high] = array[low]
+    array[low] = key
+    return low
 
-def quick_sort(lst):
-    base = lst[0]
-    i = 0
-    j = len(lst) -1 
-    while i != j:
-        while (lst[j] >= base and i < j):
-            j -= 1
-        while (lst[i] <= base and i<j):
-            i += 1
-        if i<j:
-            lst[i], lst[j] = lst[j], lst[i]
-    return lst    
-    quick_sort(lst)
-     
-a = quick_sort(lst)
-print(a)                    
-            
-        
+def quick_sort(array,low,high):
+    if low < high:
+        key_index = sub_sort(array,low,high)
+        quick_sort(array,low,key_index)
+        quick_sort(array,key_index+1,high)                   
+    
+    
+print(lst)        
+quick_sort(lst, 0, len(lst)-1)
+print(lst)       
 
